@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render, redirect
 from .models import Videojuego
 
@@ -17,6 +18,8 @@ def crear_juego(request):
         genero = request.POST['genero']
         precio = request.POST['precio']
         stock = request.POST['stock']
+        fecha_texto = request.POST['fecha_estreno'].strip()
+
 
         # Creamos el registro en MySQL
         Videojuego.objects.create(
@@ -24,7 +27,8 @@ def crear_juego(request):
             plataforma=plataforma,
             genero=genero,
             precio=precio,
-            stock=stock
+            stock=stock,
+            fecha_estreno = fecha_estreno,
         )
         return redirect('listar_juegos')
     

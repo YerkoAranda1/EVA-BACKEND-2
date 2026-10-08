@@ -6,6 +6,7 @@ class Videojuego(models.Model):
     genero = models.CharField(max_length=50)
     precio = models.IntegerField()
     stock = models.IntegerField()
+    fecha_estreno = models.Datafiel(verbose_name="Fecha de estreno")
 
     def __str__(self):
         return self.titulo
