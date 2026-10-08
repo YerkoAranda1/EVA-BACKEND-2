@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameGo - Inventario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-dark bg-dark shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'listar_juegos' %}">🎮 GameGo Admin</a>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold">Inventario de Videojuegos</h2>
+            <a href="{% url 'crear_juego' %}" class="btn btn-success fw-bold px-4">+ Añadir Nuevo Juego</a>
+        </div>
+
+        <div class="card shadow">
+            <div class="card-body p-0">
+                <table class="table table-dark table-striped table-hover m-0 text-center align-middle">
+                    <thead class="table-secondary text-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Título</th>
+                            <th>Plataforma</th>
+                            <th>Género</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for juego in juegos %}
+                        <tr>
+                            <td>{{ juego.id }}</td>
+                            <td class="fw-bold text-start">{{ juego.titulo }}</td>
+                            <td><span class="badge bg-secondary">{{ juego.plataforma }}</span></td>
+                            <td>{{ juego.genero }}</td>
+                            <td class="text-success fw-bold">${{ juego.precio }}</td>
+                            <td>
+                                {% if juego.stock <= 0 %}
+                                    <span class="badge bg-danger">Agotado</span>
+                                {% else %}
+                                    {{ juego.stock }} un.
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'editar_juego' juego.id %}" class="btn btn-warning btn-sm fw-bold">Editar</a>
+                                <a href="{% url 'eliminar_juego' juego.id %}" class="btn btn-danger btn-sm fw-bold">Eliminar</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="py-4 text-muted bg-dark">
+                                No hay videojuegos registrados actualmente en el catálogo.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
